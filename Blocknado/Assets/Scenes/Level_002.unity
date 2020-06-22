@@ -396,7 +396,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &544226480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1156,7 +1156,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &1196284943
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1668,11 +1668,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -1723,7 +1723,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c466a4e2273778459506365162803a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  block: {fileID: 5428512846006665803, guid: 63e7e8426e7f5db4abb1db4825352df6, type: 3}
+  block: {fileID: 5428512846006665804, guid: 63e7e8426e7f5db4abb1db4825352df6, type: 3}
+  list: []
+  _BlockData:
+    blockName: nope
 --- !u!4 &1498935336
 Transform:
   m_ObjectHideFlags: 0
@@ -1812,7 +1815,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &1778798875
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2035,11 +2038,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -2243,7 +2246,7 @@ PrefabInstance:
     - target: {fileID: 8200916960951777382, guid: e02e68fd6e69f174c96b0a98dd596c5d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8200916960951777382, guid: e02e68fd6e69f174c96b0a98dd596c5d,
         type: 3}
@@ -2294,6 +2297,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8200916960951777385, guid: e02e68fd6e69f174c96b0a98dd596c5d,
+        type: 3}
+      propertyPath: size
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e02e68fd6e69f174c96b0a98dd596c5d, type: 3}

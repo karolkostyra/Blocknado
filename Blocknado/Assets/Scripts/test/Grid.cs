@@ -31,7 +31,7 @@ public class Grid : MonoBehaviour
             for (float y = 0; y < 12; y += size)
             {
                 var point = GetNearestPointOnGrid(new Vector3(x, y, 0f));
-                Gizmos.DrawSphere(point+new Vector3(0.5f,0.5f,0), 0.1f);
+                Gizmos.DrawSphere(point, 0.1f);
             }
 
         }
