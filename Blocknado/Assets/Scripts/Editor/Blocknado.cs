@@ -25,6 +25,10 @@ public class Blocknado : EditorWindow
         {
             InstantiateBlocks();
         }
+        if (GUILayout.Button("Remove the blocks", editorButton, GUILayout.Height(30)))
+        {
+            RemoveBlocks();
+        }
         if (GUILayout.Button("SaveArray", editorButton, GUILayout.Height(30)))
         {
             Save();
@@ -54,6 +58,23 @@ public class Blocknado : EditorWindow
                 obj.transform.SetParent(parent.transform);
                 obj.transform.position = new Vector2(list[i], list[i + 1]);
             }
+        }
+    }
+
+    private void RemoveBlocks()
+    {
+        GameObject parent = GameObject.FindGameObjectWithTag("Blocks");
+
+        List<GameObject> list = new List<GameObject>();
+
+        foreach(Transform child in parent.transform)
+        {
+            list.Add(child.gameObject);
+        }
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            DestroyImmediate(list[i], false);
         }
     }
 

@@ -21,6 +21,7 @@ public class BlockPlacer : MonoBehaviour
     private void Awake()
     {
         grid = FindObjectOfType<Grid>();
+        UpdateBlockList();
     }
 
     private void Update()
@@ -30,6 +31,10 @@ public class BlockPlacer : MonoBehaviour
             Vector3 ray = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             PlaceBlockNear(ray);
         }
+        if (Input.GetMouseButtonDown(1))
+        {
+            RemoveBlockNear();
+        }
     }
 
     private void PlaceBlockNear(Vector3 clickPoint)
@@ -37,7 +42,43 @@ public class BlockPlacer : MonoBehaviour
         var finalPosition = grid.GetNearestPointOnGrid(clickPoint);
         GameObject obj = Instantiate(block);
         obj.transform.position = finalPosition;
+        obj.tag = "Block";
         list.Add(obj);
+    }
+
+    private void RemoveBlockNear()
+    {
+        var targetTag = "Block";
+        Vector2 origin = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,
+                                     Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+
+        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.zero, 0f);
+
+        if(hit.collider != null && hit.collider.CompareTag(targetTag))
+        {
+            Vector3 ray = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var finalPosition = grid.GetNearestPointOnGrid(ray);
+
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].transform.position == finalPosition)
+                {
+                    Destroy(list[i]);
+                    list.Remove(list[i]);
+                }
+            }
+        }
+    }
+
+    private void UpdateBlockList()
+    {
+        var parent = GameObject.FindGameObjectWithTag("Blocks");
+
+        foreach (Transform child in parent.transform)
+        {
+            list.Add(child.gameObject);
+        }
     }
 
     public void SaveArray()
@@ -51,13 +92,11 @@ public class BlockPlacer : MonoBehaviour
     public List<float> LoadArray()
     {
         string filePath = System.IO.Path.Combine(Application.persistentDataPath, "BlocksData.json");
-        
 
         if (File.Exists(filePath))
         {
             string data = System.IO.File.ReadAllText(filePath);
-            BlocksData blocksData = JsonUtility.FromJson<BlocksData>(data);
-            //Debug.Log(blocksData.blocksList);
+            BlocksData blocksData = JsonUtility.FromJson<BlocksData>(data);;
             return blocksData.blocksList;
             
         }
