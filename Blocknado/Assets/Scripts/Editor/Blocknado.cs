@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 using System.IO;
+using UnityEditor.SceneManagement;
 
 public class Blocknado : EditorWindow
 {
@@ -28,6 +29,11 @@ public class Blocknado : EditorWindow
         if (GUILayout.Button("Remove the blocks", editorButton, GUILayout.Height(30)))
         {
             RemoveBlocks();
+        }
+        if (GUILayout.Button("Create and prepare new level", editorButton, GUILayout.Height(30)))
+        {
+            EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
+            CreateNewLevel();
         }
         if (GUILayout.Button("SaveArray", editorButton, GUILayout.Height(30)))
         {
@@ -76,6 +82,36 @@ public class Blocknado : EditorWindow
         {
             DestroyImmediate(list[i], false);
         }
+    }
+
+    private void CreateNewLevel()
+    {
+        string newLevelPath = "Assets/Scenes/Levels/NewLevel.unity";
+        EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+        LoadScenePrefabs();
+        SaveCurrentScene(newLevelPath);
+    }
+
+    private void LoadScenePrefabs()
+    {
+        string path = "Assets/Prefabs";
+        List<string> prefabNames = new List<string>() {"Main Camera", "Ball", "Paddle", "Game space",
+                                                        "Grid", "BlockPlacer", "Blocks"};
+
+        for (int i = 0; i < prefabNames.Count; i++)
+        {
+            Object prefab = AssetDatabase.LoadAssetAtPath(path + "/" + prefabNames[i]
+                + ".prefab", typeof(GameObject));
+            if(prefab != null)
+            {
+                PrefabUtility.InstantiatePrefab(prefab);
+            }
+        }
+    }
+
+    private void SaveCurrentScene(string scenePath)
+    {
+        EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene(), scenePath);
     }
 
     private void Save()
