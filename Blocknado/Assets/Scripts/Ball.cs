@@ -7,7 +7,9 @@ public class Ball : MonoBehaviour
     [SerializeField] private Paddle paddle;
     [SerializeField] private float xPush;
     [SerializeField] private float yPush;
+    [SerializeField] private AudioClip[] ballSounds;
 
+    private AudioSource ballAudioSource;
     private Vector2 paddleBallVector; // distance between center of paddle and ball
     private Vector3 lastBallPos;
     private bool isLaunched;
@@ -15,13 +17,13 @@ public class Ball : MonoBehaviour
     private Vector3 mouseDelta = Vector3.zero;
     private Vector3 lastMousePosition = Vector3.zero;
 
-
     private void Start()
     {
         isLaunched = false;
         SetStartingPos();
         UpdateLastBallPos();
         paddleBallVector = transform.position - paddle.transform.position;
+        ballAudioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -82,6 +84,15 @@ public class Ball : MonoBehaviour
         {
             isLaunched = true;
             GetComponent<Rigidbody2D>().velocity = new Vector2(xPush, yPush);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (isLaunched)
+        {
+            AudioClip randomClip = ballSounds[Random.Range(0, ballSounds.Length)];
+            ballAudioSource.PlayOneShot(randomClip);
         }
     }
 }
