@@ -96,7 +96,8 @@ public class Blocknado : EditorWindow
     {
         string path = "Assets/Prefabs";
         List<string> prefabNames = new List<string>() {"Main Camera", "Ball", "Paddle", "Game space",
-                                  "Grid", "BlockPlacer", "Blocks", "EventSystem", "Level", "SceneLoader"};
+                                            "Grid", "BlockPlacer", "Blocks", "EventSystem", "Level",
+                                            "GameCanvas", "SceneLoader", "GameStatus"};
 
         for (int i = 0; i < prefabNames.Count; i++)
         {
