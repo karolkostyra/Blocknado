@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   paddle: {fileID: 0}
-  xPush: 0
+  xPush: 2
   yPush: 15
   randomFactor: 0.5
   ballSounds:

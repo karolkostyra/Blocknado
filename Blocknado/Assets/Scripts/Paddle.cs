@@ -8,9 +8,13 @@ public class Paddle : MonoBehaviour
     [SerializeField] private float minX = 1f;
     [SerializeField] private float maxX = 15f;
 
+    private GameSession gameSession;
+    private Ball ball;
+
     private void Start()
     {
-
+        gameSession = FindObjectOfType<GameSession>();
+        ball = FindObjectOfType<Ball>();
     }
 
     private void Update()
@@ -23,9 +27,9 @@ public class Paddle : MonoBehaviour
 
     private float GetXPos()
     {
-        if (FindObjectOfType<GameSession>().IsAutoPlayEnabled())
+        if (gameSession.IsAutoPlayEnabled())
         {
-            return FindObjectOfType<Ball>().transform.position.x;
+            return ball.transform.position.x;
         }
         else
         {
