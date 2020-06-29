@@ -9,6 +9,7 @@ public class SceneLoader : MonoBehaviour
     public void LoadMenu()
     {
         SceneManager.LoadScene(0);
+        FindObjectOfType<GameSession>().ResetGame();
     }
 
     public void LoadNextScene()

@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class GameStatus : MonoBehaviour
+public class GameSession : MonoBehaviour
 {
     [SerializeField] [Range(0.1f, 10f)] public float gameSpeed = 1f;
     [SerializeField] private int currentScore;
@@ -16,7 +16,7 @@ public class GameStatus : MonoBehaviour
     private void Awake()
     {
         levelSummaryObj = gameObject.transform.Find("GameCanvas").transform.Find("LevelSummary");
-        int gameStatusCount = FindObjectsOfType<GameStatus>().Length;
+        int gameStatusCount = FindObjectsOfType<GameSession>().Length;
         if (gameStatusCount > 1)
         {
             gameObject.SetActive(false);
@@ -45,6 +45,11 @@ public class GameStatus : MonoBehaviour
         scoreText.text = currentScore.ToString();
     }
 
+    public void ResetGame()
+    {
+        Destroy(gameObject);
+    }
+
     private void LevelSummary()
     {
         gameSpeed = 0f;
@@ -68,6 +73,4 @@ public class GameStatus : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
         Level.OnBlocksDestroyed -= LevelSummary;
     }
-
-    
 }
