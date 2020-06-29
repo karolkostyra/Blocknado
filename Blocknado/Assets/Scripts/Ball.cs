@@ -12,7 +12,7 @@ public class Ball : MonoBehaviour
     private AudioSource ballAudioSource;
     private Vector2 paddleBallVector; // distance between center of paddle and ball
     private Vector3 lastBallPos;
-    private bool isLaunched;
+    [SerializeField] private bool isLaunched;
 
     private Vector3 mouseDelta = Vector3.zero;
     private Vector3 lastMousePosition = Vector3.zero;

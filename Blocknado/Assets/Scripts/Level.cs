@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
+    public delegate void BlocksDestroyedAction();
+    public static event BlocksDestroyedAction OnBlocksDestroyed;
+
     [SerializeField] private int numberOfBlocks;
-    [SerializeField] private GameObject levelSummary;
 
     private SceneLoader sceneLoader;
+
 
     private void Start()
     {
         sceneLoader = FindObjectOfType<SceneLoader>();
-        levelSummary.SetActive(false);
     }
 
     public void CountBlocks()
@@ -25,10 +27,7 @@ public class Level : MonoBehaviour
         numberOfBlocks--;
         if(numberOfBlocks <= 0)
         {
-            levelSummary.SetActive(true);
-            GameStatus gameStatus = FindObjectOfType<GameStatus>();
-            gameStatus.gameSpeed = 0f;
-            //sceneLoader.LoadNextScene();
+            OnBlocksDestroyed();
         }
     }
 }
