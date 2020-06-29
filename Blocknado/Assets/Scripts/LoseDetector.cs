@@ -10,7 +10,16 @@ public class LoseDetector : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        SceneManager.LoadScene(sceneName);
+        int ballNumber = FindObjectsOfType<Ball>().Length;
+
+        if(ballNumber == 1)
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+        else
+        {
+            Destroy(collision.gameObject);
+        }
         //GameStatus gameStatus = FindObjectOfType<GameStatus>();
         //gameOverScreen.SetActive(true);
         //gameStatus.Score();

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +7,7 @@ public class Block : MonoBehaviour
     [SerializeField] private AudioClip breakSound;
     [SerializeField] private GameObject blockSparklesVFX;
     [SerializeField] private Sprite[] hitSprites;
+    [SerializeField] private bool multiplyBalls;
     private int timesHit;
 
     private Level level;
@@ -33,6 +33,25 @@ public class Block : MonoBehaviour
         if(tag == "Breakable")
         {
             HandleHit();
+            MultiplyBalls();
+        }
+    }
+
+    private void MultiplyBalls()
+    {
+        if (multiplyBalls)
+        {
+            Ball ballReference = FindObjectOfType<Ball>();
+            for (int i = 0; i < 2; i++)
+            {
+                GameObject ball = Instantiate
+                        (ballReference.gameObject,
+                        gameObject.transform.position,
+                        gameObject.transform.rotation);
+
+                ball.GetComponent<Rigidbody2D>().velocity += new Vector2
+                                (Random.Range(5, 10), Random.Range(5, 10));
+            }
         }
     }
 

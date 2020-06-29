@@ -22,8 +22,11 @@ public class Ball : MonoBehaviour
 
     private void Start()
     {
-        isLaunched = false;
-        SetStartingPos();
+        if(FindObjectsOfType<Ball>().Length == 1)
+        {
+            isLaunched = false;
+            SetStartingPos();
+        }
         UpdateLastBallPos();
         paddleBallVector = transform.position - paddle.transform.position;
         ballAudioSource = GetComponent<AudioSource>();
@@ -95,7 +98,7 @@ public class Ball : MonoBehaviour
     {
         Vector2 velocityTweak = new Vector2(Random.Range(0, randomFactor),
                                             Random.Range(0, randomFactor));
-        if (isLaunched)
+        if (isLaunched && collision.gameObject.tag != "Ball")
         {
             AudioClip randomClip = ballSounds[Random.Range(0, ballSounds.Length)];
             ballAudioSource.PlayOneShot(randomClip);
