@@ -1003,6 +1003,11 @@ PrefabInstance:
       propertyPath: gameSpeed
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 3040341961985017792, guid: 28aa87bfa936e1b4588863f56112575f,
+        type: 3}
+      propertyPath: isAutoPlayEnabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3442321763231017330, guid: 28aa87bfa936e1b4588863f56112575f,
         type: 3}
       propertyPath: m_havePropertiesChanged

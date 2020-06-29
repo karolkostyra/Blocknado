@@ -9,8 +9,8 @@ public class GameSession : MonoBehaviour
     [SerializeField] [Range(0.1f, 10f)] public float gameSpeed = 1f;
     [SerializeField] private int currentScore;
     [SerializeField] private int pointsPerBlock;
-
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private bool isAutoPlayEnabled;
     private Transform levelSummaryObj;
 
     private void Awake()
@@ -72,5 +72,10 @@ public class GameSession : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
         Level.OnBlocksDestroyed -= LevelSummary;
+    }
+
+    public bool IsAutoPlayEnabled()
+    {
+        return isAutoPlayEnabled;
     }
 }
