@@ -7,6 +7,7 @@ public class Ball : MonoBehaviour
     [SerializeField] private Paddle paddle;
     [SerializeField] private float xPush;
     [SerializeField] private float yPush;
+    [SerializeField] private float ballForce;
     [SerializeField] private float randomFactor = 0.5f;
     [SerializeField] private AudioClip[] ballSounds;
 
@@ -15,6 +16,7 @@ public class Ball : MonoBehaviour
 
     private Vector2 paddleBallVector; // distance between center of paddle and ball
     private Vector3 lastBallPos;
+    private Vector2 velocityTweak;
     [SerializeField] private bool isLaunched;
 
     private Vector3 mouseDelta = Vector3.zero;
@@ -80,6 +82,22 @@ public class Ball : MonoBehaviour
         }
     }
 
+    private void DetectBallDirection()
+    {
+        if(lastBallPos.x < gameObject.transform.position.x)
+        {
+            velocityTweak = new Vector2(Random.Range(1, randomFactor + 3),
+                                            Random.Range(0, randomFactor));
+            Debug.Log("TRUE");
+        }
+        else
+        {
+            velocityTweak = new Vector2(-Random.Range(1, randomFactor + 3),
+                                            Random.Range(0, randomFactor));
+            Debug.Log("FALSE");
+        }
+    }
+
     private void UpdateLastBallPos()
     {
         lastBallPos = transform.position;
@@ -90,19 +108,25 @@ public class Ball : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             isLaunched = true;
+            //rigidbody2D.AddForce(new Vector2(xPush*50, ballForce));
             rigidbody2D.velocity = new Vector2(xPush, yPush);
         }
     }
 
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Vector2 velocityTweak = new Vector2(Random.Range(0, randomFactor),
-                                            Random.Range(0, randomFactor));
+        //Vector2 velocityTweak = new Vector2(Random.Range(2, randomFactor+5),
+        //Random.Range(0, randomFactor));
+
         if (isLaunched && collision.gameObject.tag != "Ball")
         {
             AudioClip randomClip = ballSounds[Random.Range(0, ballSounds.Length)];
             ballAudioSource.PlayOneShot(randomClip);
+            //rigidbody2D.velocity -= velocityTweak;
+            DetectBallDirection();
             rigidbody2D.velocity += velocityTweak;
+            UpdateLastBallPos();
         }
     }
 }
