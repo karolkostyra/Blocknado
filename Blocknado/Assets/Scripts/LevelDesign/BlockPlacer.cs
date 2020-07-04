@@ -7,8 +7,14 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class BlockPlacer : MonoBehaviour
 {
     [SerializeField] private GameObject block;
-    [SerializeField] private BlocksData _BlockData = new BlocksData();
+    [SerializeField] private GameObject smallBlock;
+    [SerializeField] private GameObject horizontalBlock;
+    public bool smallBlocks = false;
+    
     private Grid grid;
+    private Vector3 ray;
+
+    [SerializeField] private BlocksData _BlockData = new BlocksData();
     public List<GameObject> list = new List<GameObject>();
 
     [System.Serializable]
@@ -26,21 +32,31 @@ public class BlockPlacer : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        ray = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        var leftCtrl = Input.GetKey(KeyCode.LeftControl);
+
+        if (!leftCtrl && Input.GetMouseButtonDown(0))
         {
-            Vector3 ray = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            PlaceBlockNear(ray);
+            PlaceBlockNear(ray, block);
         }
-        if (Input.GetMouseButtonDown(1))
+        else if (leftCtrl && Input.GetMouseButtonDown(0))
+        {
+            PlaceBlockNear(ray, horizontalBlock);
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            PlaceBlockNear(ray, smallBlock);
+        }
+        else if (Input.GetMouseButtonDown(2))
         {
             RemoveBlockNear();
-        }
+        } 
     }
 
-    private void PlaceBlockNear(Vector3 clickPoint)
+    private void PlaceBlockNear(Vector3 clickPoint, GameObject prefab)
     {
         var finalPosition = grid.GetNearestPointOnGrid(clickPoint);
-        GameObject obj = Instantiate(block);
+        GameObject obj = Instantiate(prefab);
         obj.transform.position = finalPosition;
         obj.tag = "Block";
         list.Add(obj);

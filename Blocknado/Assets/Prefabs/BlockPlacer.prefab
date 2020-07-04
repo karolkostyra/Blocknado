@@ -44,6 +44,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   block: {fileID: 5428512846006665804, guid: 63e7e8426e7f5db4abb1db4825352df6, type: 3}
+  smallBlock: {fileID: 5428512846006665804, guid: 7c433ff0be5b8e54d86f56c0c05ba932,
+    type: 3}
+  horizontalBlock: {fileID: 4557259854789154404, guid: 9c5937355997be34e99d634b45df1bf8,
+    type: 3}
+  smallBlocks: 1
   _BlockData:
     blocksList: []
   list: []

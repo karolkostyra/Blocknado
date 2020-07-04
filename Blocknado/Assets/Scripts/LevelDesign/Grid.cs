@@ -2,8 +2,26 @@
 
 public class Grid : MonoBehaviour
 {
-    [SerializeField]
-    private float size = 1f;
+    [SerializeField] private float size = 1f;
+
+    private BlockPlacer blockPlacer;
+
+    private void Start()
+    {
+        blockPlacer = FindObjectOfType<BlockPlacer>();
+    }
+
+    private void Update()
+    {
+        if (blockPlacer.smallBlocks)
+        {
+            size = 0.5f;
+        }
+        else
+        {
+            size = 1f;
+        }
+    }
 
     public Vector3 GetNearestPointOnGrid(Vector3 position)
     {
