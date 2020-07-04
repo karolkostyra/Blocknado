@@ -48,15 +48,17 @@ public class Blocknado : EditorWindow
     private void InstantiateBlocks()
     {
         string path = "Assets/Prefabs";
-        string prefabName = "Block";
+        //string prefabName = "Block";
         GameObject parent = GameObject.FindGameObjectWithTag("Blocks");
 
         blockPlacer = FindObjectOfType<BlockPlacer>();
         var list = blockPlacer.LoadArray();
+        var names = blockPlacer.LoadNames();
 
-        for (int i = 0; i < list.Count; i=i+2)
+        for (int i = 0, j = 0; i < list.Count; i=i+2, j++)
         {
-            Object prefab = AssetDatabase.LoadAssetAtPath(path + "/" + prefabName
+            Object prefab = AssetDatabase.LoadAssetAtPath(path + "/"
+                + names[j].Substring(0,names[j].Length-7)
                 + ".prefab", typeof(GameObject));
             if (prefab != null)
             {

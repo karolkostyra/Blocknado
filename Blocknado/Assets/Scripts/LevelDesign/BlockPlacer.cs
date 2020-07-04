@@ -20,6 +20,7 @@ public class BlockPlacer : MonoBehaviour
     [System.Serializable]
     public class BlocksData
     {
+        public List<string> blockNames = new List<string>();
         public List<float> blocksList = new List<float>();
     }
 
@@ -123,12 +124,31 @@ public class BlockPlacer : MonoBehaviour
         }
     }
 
+    public List<string> LoadNames()
+    {
+        string filePath = System.IO.Path.Combine(Application.persistentDataPath, "BlocksData.json");
+
+        if (File.Exists(filePath))
+        {
+            string data = System.IO.File.ReadAllText(filePath);
+            BlocksData blocksData = JsonUtility.FromJson<BlocksData>(data); ;
+            return blocksData.blockNames;
+
+        }
+        else
+        {
+            Debug.Log("ERROR - FILE NOT FOUND!");
+            return null;
+        }
+    }
+
     private void SaveDataBlocks()
     {
         for (int i = 0; i < list.Count; i++)
         {
             _BlockData.blocksList.Add(list[i].transform.position.x);
             _BlockData.blocksList.Add(list[i].transform.position.y);
+            _BlockData.blockNames.Add(list[i].name);
         }
     }
 }
