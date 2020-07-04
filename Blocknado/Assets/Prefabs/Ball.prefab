@@ -135,7 +135,8 @@ MonoBehaviour:
   paddle: {fileID: 0}
   xPush: 2
   yPush: 15
-  randomFactor: 0.5
+  maxSpeed: 10
+  directionModifier: 2
   ballSounds:
   - {fileID: 8300000, guid: 58de5a1cc189d3846a52ffe7fefa0918, type: 3}
   - {fileID: 8300000, guid: 8369d7f61a62b8044a0fd47143d6472f, type: 3}

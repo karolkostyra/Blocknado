@@ -7,8 +7,9 @@ public class Ball : MonoBehaviour
     [SerializeField] private Paddle paddle;
     [SerializeField] private float xPush;
     [SerializeField] private float yPush;
-    [SerializeField] private float ballForce;
-    [SerializeField] private float randomFactor = 0.5f;
+    [SerializeField] private float minSpeed = 10f;
+    [SerializeField] private float maxSpeed = 10f;
+    [SerializeField] private float directionModifier = 2f;
     [SerializeField] private AudioClip[] ballSounds;
 
     private AudioSource ballAudioSource;
@@ -16,7 +17,6 @@ public class Ball : MonoBehaviour
 
     private Vector2 paddleBallVector; // distance between center of paddle and ball
     private Vector3 lastBallPos;
-    private Vector2 velocityTweak;
     [SerializeField] private bool isLaunched;
 
     private Vector3 mouseDelta = Vector3.zero;
@@ -35,18 +35,28 @@ public class Ball : MonoBehaviour
         rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         mouseDelta = Input.mousePosition - lastMousePosition;
         lastMousePosition = Input.mousePosition;
         //Debug.Log("SPEED: " + mouseDelta);
-
+        Debug.Log(rigidbody2D.velocity);
         DetectMouseDirection();
         if (!isLaunched)
         {
             StickToPaddle();
             LaunchOnMouseClick();
         }
+        LimitBallSpeed();
+    }
+
+    private void LimitBallSpeed()
+    {
+        if (rigidbody2D.velocity.magnitude < minSpeed)
+            rigidbody2D.velocity = Vector2.ClampMagnitude(rigidbody2D.velocity, minSpeed);
+
+        if (rigidbody2D.velocity.magnitude > maxSpeed)
+            rigidbody2D.velocity = Vector2.ClampMagnitude(rigidbody2D.velocity, maxSpeed);
     }
 
     private void SetStartingPos()
@@ -84,17 +94,27 @@ public class Ball : MonoBehaviour
 
     private void DetectBallDirection()
     {
-        if(lastBallPos.x < gameObject.transform.position.x)
+        var sign = Random.Range(0, 2); //specifies the sign of directionModifier(- or +)
+
+        if (Mathf.Abs(lastBallPos.x-gameObject.transform.position.x) < 0.1f)
         {
-            velocityTweak = new Vector2(Random.Range(1, randomFactor + 3),
-                                            Random.Range(0, randomFactor));
-            Debug.Log("TRUE");
+            AddImpulse(sign, transform.right);
+        }
+        if(Mathf.Abs(lastBallPos.y - gameObject.transform.position.y) < 0.1f)
+        {
+            AddImpulse(sign, transform.up);
+        }
+    }
+
+    private void AddImpulse(int x, Vector3 direction)
+    {
+        if (x == 0)
+        {
+            rigidbody2D.AddForce(direction * -directionModifier, ForceMode2D.Impulse);
         }
         else
         {
-            velocityTweak = new Vector2(-Random.Range(1, randomFactor + 3),
-                                            Random.Range(0, randomFactor));
-            Debug.Log("FALSE");
+            rigidbody2D.AddForce(direction * directionModifier, ForceMode2D.Impulse);
         }
     }
 
@@ -108,25 +128,17 @@ public class Ball : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             isLaunched = true;
-            //rigidbody2D.AddForce(new Vector2(xPush*50, ballForce));
             rigidbody2D.velocity = new Vector2(xPush, yPush);
         }
     }
-
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //Vector2 velocityTweak = new Vector2(Random.Range(2, randomFactor+5),
-        //Random.Range(0, randomFactor));
-
         if (isLaunched && collision.gameObject.tag != "Ball")
         {
             AudioClip randomClip = ballSounds[Random.Range(0, ballSounds.Length)];
             ballAudioSource.PlayOneShot(randomClip);
-            //rigidbody2D.velocity -= velocityTweak;
             DetectBallDirection();
-            rigidbody2D.velocity += velocityTweak;
-            UpdateLastBallPos();
         }
     }
 }

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4842191521014111291}
   m_Layer: 0
-  m_Name: Game space
+  m_Name: GameSpace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -341,7 +341,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 20, y: 1}
+  m_Size: {x: 26, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &4842191522483987879
 MonoBehaviour:
@@ -356,3 +356,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: GameOver
+  gameOverScreen: {fileID: 0}
